@@ -1,0 +1,712 @@
+[
+    {
+        "id": "9dd409498e214dc1",
+        "type": "tab",
+        "label": "Authentication",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bc86f8ebe55fbb70",
+        "type": "http response",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 1880,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cd75957f17de7588",
+        "type": "http in",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "url": "/authsvc/login",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 360,
+        "wires": [
+            [
+                "7ef30874b26e69b7",
+                "4f8926087180e509"
+            ]
+        ]
+    },
+    {
+        "id": "3ba7ed3831e68889",
+        "type": "http in",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "url": "/authsvc/createUser",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 420,
+        "wires": [
+            [
+                "f028037dc0a13441"
+            ]
+        ]
+    },
+    {
+        "id": "8e8b7c20e0a37a80",
+        "type": "http request",
+        "z": "9dd409498e214dc1",
+        "name": "create account",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:1880/authsvc/createUser",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "325312e2e3332dd7",
+                "8b08b4d75deb519a"
+            ]
+        ]
+    },
+    {
+        "id": "325312e2e3332dd7",
+        "type": "json",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 610,
+        "y": 100,
+        "wires": [
+            [
+                "7cf842f1b4987978"
+            ]
+        ]
+    },
+    {
+        "id": "7cf842f1b4987978",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b2da3a1e4381b2c5",
+        "type": "inject",
+        "z": "9dd409498e214dc1",
+        "name": "create user",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"email\":\"klaurier@redhat.com\",\"lastName\":\"Laurier\",\"firstName\":\"Kevin\",\"password\":\"redhat123\",\"age\":38,\"mobile\":\"+353 89 256 7890\"}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "8e8b7c20e0a37a80"
+            ]
+        ]
+    },
+    {
+        "id": "c6bc46209fd16c84",
+        "type": "template",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO UserData (Email, LastName, FirstName, Password, Age, Mobile) VALUES ('{{payload.email}}', '{{payload.lastName}}', '{{payload.firstName}}', '{{payload.password}}', '{{payload.age}}', '{{payload.mobile}}');",
+        "output": "str",
+        "x": 640,
+        "y": 420,
+        "wires": [
+            [
+                "777f434b1559b89d"
+            ]
+        ]
+    },
+    {
+        "id": "94580bc8ac6cc20c",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "87a02794469e92cb",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1880,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f59d0247e5a6f5ce",
+        "type": "inject",
+        "z": "9dd409498e214dc1",
+        "name": "Login",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"email\":\"klaurier@redhat.com\",\"password\":\"redhat123\"}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "bd7223e61f928bb7"
+            ]
+        ]
+    },
+    {
+        "id": "d805a00a7d8c6546",
+        "type": "template",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SELECT * FROM UserData WHERE Email='{{email}}';",
+        "output": "str",
+        "x": 640,
+        "y": 360,
+        "wires": [
+            [
+                "68badac13f907bee"
+            ]
+        ]
+    },
+    {
+        "id": "7ef30874b26e69b7",
+        "type": "change",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "req.body.email",
+                "pt": "msg",
+                "to": "email",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "req.body.password",
+                "pt": "msg",
+                "to": "password",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "d805a00a7d8c6546"
+            ]
+        ]
+    },
+    {
+        "id": "bd7223e61f928bb7",
+        "type": "http request",
+        "z": "9dd409498e214dc1",
+        "name": "login to account",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:1880/authsvc/login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "325312e2e3332dd7",
+                "8b08b4d75deb519a"
+            ]
+        ]
+    },
+    {
+        "id": "732340a226e5b8ee",
+        "type": "inject",
+        "z": "9dd409498e214dc1",
+        "name": "Wrong Password",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"email\":\"klaurier@redhat.com\",\"password\":\"redhat12fsd3\"}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "bd7223e61f928bb7"
+            ]
+        ]
+    },
+    {
+        "id": "0514359d38426443",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "fd8fd31aae73e069",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4f8926087180e509",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c8edf8f0e2a72185",
+        "type": "json",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 910,
+        "y": 420,
+        "wires": [
+            [
+                "bc86f8ebe55fbb70"
+            ]
+        ]
+    },
+    {
+        "id": "7a1956d8555195fb",
+        "type": "change",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.sucessful",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "payload.token",
+                "pt": "msg",
+                "to": "token",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1680,
+        "y": 360,
+        "wires": [
+            [
+                "87a02794469e92cb",
+                "bc86f8ebe55fbb70"
+            ]
+        ]
+    },
+    {
+        "id": "a8b6111b7432d89c",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9d1a34174fc27ff6",
+        "type": "change",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"data\": [payload[0]]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1300,
+        "y": 360,
+        "wires": [
+            [
+                "5b2448d79a9b7616"
+            ]
+        ]
+    },
+    {
+        "id": "f5e3d7d5d5b46caf",
+        "type": "http in",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "url": "/authsvc/healthz",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 40,
+        "wires": [
+            [
+                "7632ae194049e671"
+            ]
+        ]
+    },
+    {
+        "id": "7632ae194049e671",
+        "type": "http response",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 940,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4fb8bd8b43bea1bf",
+        "type": "http response",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "statusCode": "403",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 1880,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c7c63ce95edfb3ae",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1540,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "e6fcb837a349df6c",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8f55f4979f39e5dd",
+        "type": "change",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "hash",
+                "pt": "msg",
+                "to": "payload[0].Password",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 360,
+        "wires": [
+            [
+                "3b1ec179522831ea",
+                "e6fcb837a349df6c"
+            ]
+        ]
+    },
+    {
+        "id": "5b2448d79a9b7616",
+        "type": "jwt sign",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "alg": "HS256",
+        "exp": 3600,
+        "jwkurl": "",
+        "jwkkid": "",
+        "secret": "redhat123",
+        "key": "",
+        "signvar": "payload",
+        "storetoken": "token",
+        "x": 1480,
+        "y": 360,
+        "wires": [
+            [
+                "7a1956d8555195fb",
+                "fd8fd31aae73e069"
+            ]
+        ]
+    },
+    {
+        "id": "f028037dc0a13441",
+        "type": "bcrypt",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "action": "encrypt",
+        "field": "payload.password",
+        "hash": "payload",
+        "target": "payload",
+        "assignment": "replace",
+        "match": "match",
+        "outputs": 1,
+        "rounds": 10,
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "94580bc8ac6cc20c",
+                "c6bc46209fd16c84"
+            ]
+        ]
+    },
+    {
+        "id": "3b1ec179522831ea",
+        "type": "bcrypt",
+        "z": "9dd409498e214dc1",
+        "name": "",
+        "action": "verify",
+        "field": "password",
+        "hash": "hash",
+        "target": "payload",
+        "assignment": "replace",
+        "match": "match",
+        "outputs": 2,
+        "rounds": 10,
+        "x": 1080,
+        "y": 360,
+        "wires": [
+            [
+                "a8b6111b7432d89c",
+                "9d1a34174fc27ff6"
+            ],
+            [
+                "4fb8bd8b43bea1bf",
+                "c7c63ce95edfb3ae"
+            ]
+        ]
+    },
+    {
+        "id": "68badac13f907bee",
+        "type": "mysql",
+        "z": "9dd409498e214dc1",
+        "mydb": "edb7009b98b63974",
+        "name": "",
+        "x": 770,
+        "y": 360,
+        "wires": [
+            [
+                "0514359d38426443",
+                "8f55f4979f39e5dd"
+            ]
+        ]
+    },
+    {
+        "id": "777f434b1559b89d",
+        "type": "mysql",
+        "z": "9dd409498e214dc1",
+        "mydb": "edb7009b98b63974",
+        "name": "",
+        "x": 770,
+        "y": 420,
+        "wires": [
+            [
+                "c8edf8f0e2a72185"
+            ]
+        ]
+    },
+    {
+        "id": "8b08b4d75deb519a",
+        "type": "debug",
+        "z": "9dd409498e214dc1",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "edb7009b98b63974",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "mariadb",
+        "port": "3306",
+        "db": "db",
+        "tz": "",
+        "charset": "utf8mb4"
+    }
+]
