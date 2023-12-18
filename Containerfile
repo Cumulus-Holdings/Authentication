@@ -5,3 +5,5 @@
     # Remove the next line once integrated with PVC
     COPY flows.json /data
     USER node-red
+
+    EXPOSE 1880
