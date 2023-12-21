@@ -1,0 +1,12 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: auth-api
+spec:
+  serviceAccountName: pipeline
+  triggers:
+  - bindings:
+    - ref: auth-api
+    template:
+      ref: auth-api
